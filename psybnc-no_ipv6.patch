@@ -1,0 +1,13 @@
+--- tools/autoconf.c.orig	2002-05-17 17:21:08.000000000 +0000
++++ tools/autoconf.c	2004-01-12 23:46:37.638017328 +0000
+@@ -328,7 +328,9 @@
+ 	printf("Byte order: Low Endian.\n");
+     printf("IPv6-Support: ");
+     fflush(stdout);
+-    ipv6=checkipv6();
++/*    ipv6=checkipv6(); */
++    ipv6=1;
++
+     if(ipv6==0)
+     {
+ #ifdef AF_INET6
