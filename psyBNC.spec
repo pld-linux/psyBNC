@@ -2,11 +2,11 @@ Summary:	Advanced IRC bouncer
 Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
 Name:		psyBNC
 Version:	2.3.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Utilities
-Source0:	http://bluemoon.reverse.net/irc/bouncers/psybnc/%{name}%{version}.tar.gz
-# Source0-md5:	d583ed4e3a98f71ac5ae8b5e4caf3424
+Source0:	http://www.psychoid.lam3rz.de/%{name}%{version}.tar.gz
+# Source0-md5:	fd519cc66b305e0bceacc03e7c4d2159
 Patch0:		psybnc-no_ssl.patch
 Patch2:		psybnc-menuconf.patch
 Patch3:		psybnc-lang-path.patch
