@@ -1,0 +1,12 @@
+--- Makefile.orig	Fri Sep 28 15:44:50 2001
++++ Makefile	Fri Mar 22 23:51:35 2002
+@@ -31,8 +31,7 @@
+ 	@tools/autoconf
+ 	@echo [*] Creating Menu, please wait.
+ 	@echo This needs the 'curses' libraray. If it is not available, menuconf wont work.
+-	@$(CC) menuconf/menuconf.c menuconf/inputbox.c menuconf/util.c menuconf/checklist.c menuconf/menubox.c menuconf/textbox.c src/snprintf.c -I. -lcurses -lm -o menuconf/menuconf 2>/dev/null
+-	@menuconf/menuconf
++	@$(CC) menuconf/menuconf.c menuconf/inputbox.c menuconf/util.c menuconf/checklist.c menuconf/menubox.c menuconf/textbox.c src/snprintf.c -I. -I/usr/include/ncurses -lncurses -lm -o menuconf/menuconf 2>/dev/null
+ 	@clear
+ 	@echo Now compile psyBNC using make, if not yet compiled, or if Options were changed.
+ 	@echo done.
