@@ -2,7 +2,7 @@ Summary:	Advanced IRC bouncer
 Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
 Name:		psyBNC
 Version:	2.3.2.4
-Release:	1.20
+Release:	1.23
 License:	GPL
 Group:		Networking/Utilities
 #Source0:	http://www.psychoid.lam3rz.de/%{name}%{version}.tar.gz
@@ -18,8 +18,6 @@ URL:		http://www.psychoid.lam3rz.de/psybnc.html
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define	_sysconfdir /etc/%{name}
 
 # psyconf reads the documentation files
 %define	_noautocompressdoc	README FAQ CHANGES
@@ -66,14 +64,14 @@ yes '' | %{__make} \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,{menu,}help},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,{menu,}help},/etc/certs}
 
 install psybnc $RPM_BUILD_ROOT%{_bindir}
 install menuconf/menuconf $RPM_BUILD_ROOT%{_bindir}/psyconf
 install menuconf/help/*.txt $RPM_BUILD_ROOT%{_datadir}/%{name}/menuhelp
 install help/*.* $RPM_BUILD_ROOT%{_datadir}/%{name}/help
 install lang/*.lng $RPM_BUILD_ROOT%{_datadir}/%{name}/lang
-install key/psybnc.{cert,key}.pem $RPM_BUILD_ROOT%{_sysconfdir}
+install key/psybnc.{cert,key}.pem $RPM_BUILD_ROOT/etc/certs
 install psybnc.conf psybnc.conf.example
 ln -s %{_docdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
 
@@ -98,9 +96,8 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc README CHANGES FAQ TODO SCRIPTING psybncchk psybnc.conf.example scripts/example/DEFAULT.SCRIPT
-%dir %attr(750,root,psybnc) %{_sysconfdir}
-%config(noreplace) %verify(not size mtime md5) %attr(644,root,psybnc) %{_sysconfdir}/psybnc.cert.pem
-%config(noreplace) %verify(not size mtime md5) %attr(640,root,psybnc) %{_sysconfdir}/psybnc.key.pem
+%config(noreplace) %verify(not size mtime md5) %attr(644,root,psybnc) /etc/certs/psybnc.cert.pem
+%config(noreplace) %verify(not size mtime md5) %attr(640,root,psybnc) /etc/certs/psybnc.key.pem
 
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/%{name}
