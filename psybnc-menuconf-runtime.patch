@@ -1,0 +1,123 @@
+--- ./menuconf/menuconf.c~	2005-02-03 17:55:52.000000000 +0200
++++ ./menuconf/menuconf.c	2005-02-03 17:56:02.000000000 +0200
+@@ -2022,23 +2022,23 @@
+ 		    bounceroptions();
+ 		    break;
+ 		case 103:
+-		    log=fopen("log/psybnc.log","r");
++		    log=fopen("/var/log/psybnc.log","r");
+ 		    if(log!=NULL) /* only, if exists */
+ 		    {
+ 			fclose(log);	    		    
+-			rc=dialog_textbox ("The current Log", "log/psybnc.log", 21, 78);
++			rc=dialog_textbox ("The current Log", "/var/log/psybnc.log", 21, 78);
+ 		    }
+ 		    break;
+ 		case 104:
+ 		    break;
+ 		case 105:
+-		    rc=dialog_textbox ("Read-Me", "README", 21, 78);
++		    rc=dialog_textbox ("Read-Me", "/usr/share/psyBNC/doc/README", 21, 78);
+ 		    break;
+ 		case 106:
+-		    rc=dialog_textbox ("Frequently Asked Questions", "FAQ", 21, 78);
++		    rc=dialog_textbox ("Frequently Asked Questions", "/usr/share/psyBNC/doc/FAQ", 21, 78);
+ 		    break;
+ 		case 107:
+-		    rc=dialog_textbox ("Last Changes", "CHANGES", 21, 78);
++		    rc=dialog_textbox ("Last Changes", "/usr/share/psyBNC/doc/CHANGES", 21, 78);
+ 		    break;
+ 	    }
+ 	}
+--- ../menuconf/menuconf.c~	2005-02-03 18:10:40.000000000 +0200
++++ ../menuconf/menuconf.c	2005-02-03 18:16:08.000000000 +0200
+@@ -1076,7 +1076,7 @@
+     {
+ 	pt++;
+ 	strmncpy(head,pt,sizeof(head));
+-	ap_snprintf(fil,sizeof(fil),"menuconf/help/h%d.txt",param);
++	ap_snprintf(fil,sizeof(fil),"/usr/share/psyBNC/help/h%d.txt",param);
+ 	ap_snprintf(selection,sizeof(selection),"%d:",param);
+ 	check=fopen(fil,"r");
+ 	if(check==NULL)
+
+disable compiling options. they have no point at runtime
+--- ../menuconf/menuconf.c~	2005-02-03 18:17:49.000000000 +0200
++++ ../menuconf/menuconf.c	2005-02-03 18:19:40.000000000 +0200
+@@ -133,8 +133,8 @@
+ /* Main Menu - Options */
+ 
+ const char * const mainmenu[]={
+-    "101:",
+-    "Compiling Options --->",
++//    "101:",
++//    "Compiling Options --->",
+     "102:",
+     "Bouncer-Config --->",
+     "103:",
+--- ../menuconf/menuconf.c~	2005-02-03 18:19:56.000000000 +0200
++++ ../menuconf/menuconf.c	2005-02-03 18:21:03.000000000 +0200
+@@ -2001,7 +2001,7 @@
+     int rc;
+     char lchoice[200];
+     FILE *log;
+-    strcpy(lchoice,"101:");
++    strcpy(lchoice,"102:");
+     while(1)
+     {
+ 	selection[0]=0;
+--- ../menuconf/menuconf.c~	2005-02-03 18:21:19.000000000 +0200
++++ ../menuconf/menuconf.c	2005-02-03 18:25:48.000000000 +0200
+@@ -2007,7 +2007,7 @@
+ 	selection[0]=0;
+ 	init_dialog();
+ 	rc=dialog_menu( APPNAME " " APPVER " - Configuration","Welcome to the " APPNAME " Configuration-Tool. Please select the section of Options you want to change.",
+-		    21,75,12,lchoice,7,mainmenu);
++		    21,75,12,lchoice,6,mainmenu);
+ 	extractparam();
+ 	end_dialog();
+ 	if(rc==0) /* choose */
+--- ./src/psybnc.c~	2003-09-13 16:20:10.000000000 +0300
++++ ./src/psybnc.c	2005-02-03 18:51:23.000000000 +0200
+@@ -176,7 +176,7 @@
+   conffile=fopen(configfile,"r");
+   if(conffile==NULL)
+   {
+-     printf("Configuration File %s not found, aborting\nRun 'make menuconfig' for creating a configuration or create the file manually.\n",conffile); /* rcsid */
++     printf("Configuration File %s not found, aborting\nRun 'psyconf' for creating a configuration or create the file manually.\n",conffile); /* rcsid */
+      exit (0x0);
+   }
+   fclose(conffile);
+--- psybnc/lang/english.lng~	2003-07-26 04:16:11.000000000 +0300
++++ psybnc/lang/english.lng	2005-02-03 18:54:19.000000000 +0200
+@@ -1998,7 +1998,7 @@
+ ; psybnc.c line 201:
+ msg0995=PORT1
+ ; psybnc.c line 203:
+-msg0996=No Listenports/-hosts defined.ÿRun either 'make menuconfig' to setupÿor add:ÿPSYBNC.SYSTEM.PORT1=yourportÿandÿPSYBNC.SYSTEM.HOST1=*ÿto the psybnc.confÿ
++msg0996=No Listenports/-hosts defined.ÿRun either 'psyconf' to setupÿor add:ÿPSYBNC.SYSTEM.PORT1=yourportÿandÿPSYBNC.SYSTEM.HOST1=*ÿto the psybnc.confÿ
+ ; psybnc.c line 207:
+ msg0997=SYSTEM
+ ; psybnc.c line 212:
+--- psybnc/lang/german.lng~	2003-07-26 04:16:20.000000000 +0300
++++ psybnc/lang/german.lng	2005-02-03 18:54:14.000000000 +0200
+@@ -2003,7 +2003,7 @@
+ ; psybnc.c line 201:
+ msg0995=PORT1
+ ; psybnc.c line 203:
+-msg0996=Keine Listen-Ports definiert.ÿStarte 'make menuconfig' ÿoder fuege:ÿPSYBNC.SYSTEM.PORT1=deinportÿundÿPSYBNC.SYSTEM.HOST1=*ÿzur psybnc.conf hinzuÿ
++msg0996=Keine Listen-Ports definiert.ÿStarte 'psyconf' ÿoder fuege:ÿPSYBNC.SYSTEM.PORT1=deinportÿundÿPSYBNC.SYSTEM.HOST1=*ÿzur psybnc.conf hinzuÿ
+ ; psybnc.c line 207:
+ msg0997=SYSTEM
+ ; psybnc.c line 212:
+--- psybnc/lang/italiano.lng~	2003-07-26 04:16:28.000000000 +0300
++++ psybnc/lang/italiano.lng	2005-02-03 18:54:25.000000000 +0200
+@@ -1998,7 +1998,7 @@
+ ; psybnc.c line 201:
+ msg0995=PORT1
+ ; psybnc.c line 203:
+-msg0996=Nessuna porta/host di listening definite.ÿEsegui 'make menuconfig' per il setupÿoppure aggiungi:ÿPSYBNC.SYSTEM.PORT1=tuaportaÿeÿPSYBNC.SYSTEM.HOST1=*ÿal file psybnc.confÿ
++msg0996=Nessuna porta/host di listening definite.ÿEsegui 'psyconf' per il setupÿoppure aggiungi:ÿPSYBNC.SYSTEM.PORT1=tuaportaÿeÿPSYBNC.SYSTEM.HOST1=*ÿal file psybnc.confÿ
+ ; psybnc.c line 207:
+ msg0997=SYSTEM
+ ; psybnc.c line 212:
