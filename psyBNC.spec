@@ -1,5 +1,5 @@
 Summary:	Advanced IRC bouncer
-Summary(pl):	Zaawansowane narzêdzie do tunelowania irc
+Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
 Name:		psyBNC
 Version:	2.3.1
 Release:	1
