@@ -1,0 +1,12 @@
+--- tools/autoconf.c~	Thu Jan 24 23:42:19 2002
++++ tools/autoconf.c	Thu Jan 24 23:42:19 2002
+@@ -318,7 +318,8 @@
+ 	printf("No.\n");
+     printf("SSL-Support: ");
+     fflush(stdout);
+-    ssl=checkssl();
++/*    ssl=checkssl(); */
++    ssl=1;
+     if(ssl==0)
+     {
+ #ifndef SSLPATH
