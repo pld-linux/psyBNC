@@ -1,0 +1,22 @@
+this patch allows the helpfiles being read from _datadir
+
+this guy is definately overprogrammed.
+even the parameter to fopen() syscall is in language file!
+i wonder what happens if theres oneday "w" instead of "r" of the langfile
+
+--- ./src/p_hash.c~	2003-07-25 11:56:13.000000000 +0300
++++ ./src/p_hash.c	2005-02-03 21:33:48.000000000 +0200
+@@ -326,7 +326,12 @@
+ 	{
+ 	    if(ifcommand(lngtxt(inboundhash[hashn].commandmsgnum)) && inboundhash[hashn].helpfilemsgnum!=0)
+ 	    {
+-		if ((inp=fopen(lngtxt(inboundhash[hashn].helpfilemsgnum),lngtxt(1308)))==NULL)
++#define HELPPATH "/usr/share/psyBNC"
++		char *s = lngtxt(inboundhash[hashn].helpfilemsgnum);
++		char *buf = alloca(sizeof(HELPPATH) + strlen(s) + 2);
++		sprintf(buf, "%s/%s", HELPPATH, s);
++
++		if ((inp=fopen(buf, lngtxt(1308)))==NULL)
+ 		{
+ 		    ssnprintf(user(usern)->insock,lngtxt(1309),user(usern)->nick,lngtxt(inboundhash[hashn].helpfilemsgnum));
+ 		    return 0x0;
