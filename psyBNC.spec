@@ -2,7 +2,7 @@ Summary:	Advanced IRC bouncer
 Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
 Name:		psyBNC
 Version:	2.3.2.4
-Release:	1
+Release:	1.11
 License:	GPL
 Group:		Networking/Utilities
 #Source0:	http://www.psychoid.lam3rz.de/%{name}%{version}.tar.gz
@@ -12,10 +12,14 @@ Patch0:		psybnc-sslkey.patch
 Patch1:		psybnc-gcc34.patch
 Patch2:		psybnc-menuconf.patch
 Patch3:		psybnc-lang-path.patch
+Patch4:		psybnc-menuconf-runtime.patch
 URL:		http://www.psychoid.lam3rz.de/psybnc.html
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# psyconf reads the documentation files
+%define	_noautocompressdoc	README FAQ CHANGES
 
 %description
 psyBNC is an easy-to-use, multi-user, permanent IRC-Bouncer with many
@@ -39,22 +43,16 @@ system wbudowanej pomocy.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
 
 %build
 # TODO:
 # - BIGENDIAN detection is just opposite - is usage the same?
 # - IPV6 detection relies on IPv6 socket support on builder
 
-%{__make} \
+yes '' | %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}" << EOF
-
-
-
-
-
-
-EOF
+	CFLAGS="%{rpmcflags}"
 
 %{__make} menuconfig \
 	CC="%{__cc}" \
@@ -62,20 +60,22 @@ EOF
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,key}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,key,help}}
 
 install psybnc $RPM_BUILD_ROOT%{_bindir}
 install menuconf/menuconf $RPM_BUILD_ROOT%{_bindir}/psyconf
+install menuconf/help/*.txt $RPM_BUILD_ROOT%{_datadir}/%{name}/help
 install lang/*.lng $RPM_BUILD_ROOT%{_datadir}/%{name}/lang
 install key/psybnc.{cert,key}.pem $RPM_BUILD_ROOT%{_datadir}/%{name}/key
-mv psybnc.conf psybnc.conf.example
+install psybnc.conf psybnc.conf.example
+ln -s %{_docdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README CHANGES psybncchk psybnc.conf.example
+%doc README CHANGES FAQ TODO SCRIPTING psybncchk psybnc.conf.example
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/lang
@@ -83,3 +83,5 @@ rm -rf $RPM_BUILD_ROOT
 %lang(de) %{_datadir}/%{name}/lang/german.lng
 %lang(it) %{_datadir}/%{name}/lang/italiano.lng
 %{_datadir}/%{name}/key
+%{_datadir}/%{name}/help
+%{_datadir}/%{name}/doc
