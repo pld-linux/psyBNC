@@ -7,8 +7,8 @@ diff -ruN psybnc./src/p_global.h psybnc/src/p_global.h
  
 -#define SSLCERT "key/psybnc.cert.pem"
 -#define SSLKEY "key/psybnc.key.pem"
-+#define SSLCERT "/usr/share/psyBNC/key/psybnc.cert.pem"
-+#define SSLKEY "/usr/share/psyBNC/key/psybnc.key.pem"
++#define SSLCERT "/etc/psyBNC/psybnc.cert.pem"
++#define SSLKEY "/etc/psyBNC/psybnc.key.pem"
  
  #ifdef HAVE_SSL
  #ifndef SSLSEC

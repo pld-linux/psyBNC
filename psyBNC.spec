@@ -2,7 +2,7 @@ Summary:	Advanced IRC bouncer
 Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
 Name:		psyBNC
 Version:	2.3.2.4
-Release:	1.11
+Release:	1.13
 License:	GPL
 Group:		Networking/Utilities
 #Source0:	http://www.psychoid.lam3rz.de/%{name}%{version}.tar.gz
@@ -17,6 +17,8 @@ URL:		http://www.psychoid.lam3rz.de/psybnc.html
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define	_sysconfdir /etc/%{name}
 
 # psyconf reads the documentation files
 %define	_noautocompressdoc	README FAQ CHANGES
@@ -60,13 +62,13 @@ yes '' | %{__make} \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,key,help}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,help},%{_sysconfdir}}
 
 install psybnc $RPM_BUILD_ROOT%{_bindir}
 install menuconf/menuconf $RPM_BUILD_ROOT%{_bindir}/psyconf
 install menuconf/help/*.txt $RPM_BUILD_ROOT%{_datadir}/%{name}/help
 install lang/*.lng $RPM_BUILD_ROOT%{_datadir}/%{name}/lang
-install key/psybnc.{cert,key}.pem $RPM_BUILD_ROOT%{_datadir}/%{name}/key
+install key/psybnc.{cert,key}.pem $RPM_BUILD_ROOT%{_sysconfdir}
 install psybnc.conf psybnc.conf.example
 ln -s %{_docdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
 
@@ -76,12 +78,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README CHANGES FAQ TODO SCRIPTING psybncchk psybnc.conf.example
+%dir %{_sysconfdir}
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/lang
 %{_datadir}/%{name}/lang/english.lng
 %lang(de) %{_datadir}/%{name}/lang/german.lng
 %lang(it) %{_datadir}/%{name}/lang/italiano.lng
-%{_datadir}/%{name}/key
 %{_datadir}/%{name}/help
 %{_datadir}/%{name}/doc
