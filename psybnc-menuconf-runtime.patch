@@ -36,7 +36,7 @@
  	pt++;
  	strmncpy(head,pt,sizeof(head));
 -	ap_snprintf(fil,sizeof(fil),"menuconf/help/h%d.txt",param);
-+	ap_snprintf(fil,sizeof(fil),"/usr/share/psyBNC/help/h%d.txt",param);
++	ap_snprintf(fil,sizeof(fil),"/usr/share/psyBNC/menuhelp/h%d.txt",param);
  	ap_snprintf(selection,sizeof(selection),"%d:",param);
  	check=fopen(fil,"r");
  	if(check==NULL)
