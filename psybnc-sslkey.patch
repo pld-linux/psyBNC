@@ -1,0 +1,14 @@
+diff -ruN psybnc./src/p_global.h psybnc/src/p_global.h
+--- psybnc./src/p_global.h	2003-07-25 10:55:56.000000000 +0200
++++ psybnc/src/p_global.h	2004-06-25 18:18:34.835542192 +0200
+@@ -1266,8 +1266,8 @@
+ #define pcontext { strmncpy(ctxt,__FILE__,sizeof(ctxt)); strmncpy(cfunc,__FUNCTION__,sizeof(cfunc)); cline=__LINE__; }
+ #define pmalloc(n) __pmalloc((n),__FILE__,__FUNCTION__,__LINE__)
+ 
+-#define SSLCERT "key/psybnc.cert.pem"
+-#define SSLKEY "key/psybnc.key.pem"
++#define SSLCERT "/usr/share/psyBNC/key/psybnc.cert.pem"
++#define SSLKEY "/usr/share/psyBNC/key/psybnc.key.pem"
+ 
+ #ifdef HAVE_SSL
+ #ifndef SSLSEC
