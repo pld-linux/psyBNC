@@ -2,7 +2,7 @@ Summary:	Advanced IRC bouncer
 Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
 Name:		psyBNC
 Version:	2.3.2.4
-Release:	1.13
+Release:	1.20
 License:	GPL
 Group:		Networking/Utilities
 #Source0:	http://www.psychoid.lam3rz.de/%{name}%{version}.tar.gz
@@ -13,6 +13,7 @@ Patch1:		psybnc-gcc34.patch
 Patch2:		psybnc-menuconf.patch
 Patch3:		psybnc-lang-path.patch
 Patch4:		psybnc-menuconf-runtime.patch
+Patch5:		psybnc-helppath.patch
 URL:		http://www.psychoid.lam3rz.de/psybnc.html
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-tools
@@ -22,6 +23,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # psyconf reads the documentation files
 %define	_noautocompressdoc	README FAQ CHANGES
+
+%define	groupid	143
 
 %description
 psyBNC is an easy-to-use, multi-user, permanent IRC-Bouncer with many
@@ -46,6 +49,7 @@ system wbudowanej pomocy.
 %patch2 -p0
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 # TODO:
@@ -62,11 +66,12 @@ yes '' | %{__make} \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,help},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/{lang,{menu,}help},%{_sysconfdir}}
 
 install psybnc $RPM_BUILD_ROOT%{_bindir}
 install menuconf/menuconf $RPM_BUILD_ROOT%{_bindir}/psyconf
-install menuconf/help/*.txt $RPM_BUILD_ROOT%{_datadir}/%{name}/help
+install menuconf/help/*.txt $RPM_BUILD_ROOT%{_datadir}/%{name}/menuhelp
+install help/*.* $RPM_BUILD_ROOT%{_datadir}/%{name}/help
 install lang/*.lng $RPM_BUILD_ROOT%{_datadir}/%{name}/lang
 install key/psybnc.{cert,key}.pem $RPM_BUILD_ROOT%{_sysconfdir}
 install psybnc.conf psybnc.conf.example
@@ -75,16 +80,34 @@ ln -s %{_docdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%pre
+if [ -n "`/usr/bin/getgid psybnc`" ]; then
+	if [ "`/usr/bin/getgid psybnc`" != %{groupid} ]; then
+		echo "Error: group psybnc doesn't have gid=%{groupid}. Correct this before installing %{name}." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/groupadd -g %{groupid} psybnc
+fi
+
+%postun
+if [ "$1" = "0" ]; then
+	%groupremove bnc
+fi
+
 %files
 %defattr(644,root,root,755)
-%doc README CHANGES FAQ TODO SCRIPTING psybncchk psybnc.conf.example
-%dir %{_sysconfdir}
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
+%doc README CHANGES FAQ TODO SCRIPTING psybncchk psybnc.conf.example scripts/example/DEFAULT.SCRIPT
+%dir %attr(750,root,psybnc) %{_sysconfdir}
+%config(noreplace) %verify(not size mtime md5) %attr(644,root,psybnc) %{_sysconfdir}/psybnc.cert.pem
+%config(noreplace) %verify(not size mtime md5) %attr(640,root,psybnc) %{_sysconfdir}/psybnc.key.pem
+
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/lang
 %{_datadir}/%{name}/lang/english.lng
 %lang(de) %{_datadir}/%{name}/lang/german.lng
 %lang(it) %{_datadir}/%{name}/lang/italiano.lng
+%{_datadir}/%{name}/menuhelp
 %{_datadir}/%{name}/help
 %{_datadir}/%{name}/doc
