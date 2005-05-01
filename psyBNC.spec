@@ -22,8 +22,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # psyconf reads the documentation files
 %define	_noautocompressdoc	README FAQ CHANGES
 
-%define	groupid	143
-
 %description
 psyBNC is an easy-to-use, multi-user, permanent IRC-Bouncer with many
 features. Some of its features include symmetric ciphering of talk and
@@ -79,14 +77,7 @@ ln -s %{_docdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`/usr/bin/getgid psybnc`" ]; then
-	if [ "`/usr/bin/getgid psybnc`" != %{groupid} ]; then
-		echo "Error: group psybnc doesn't have gid=%{groupid}. Correct this before installing %{name}." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/groupadd -g %{groupid} psybnc
-fi
+%groupadd -g 143 psybnc
 
 %postun
 if [ "$1" = "0" ]; then
@@ -96,8 +87,8 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc README CHANGES FAQ TODO SCRIPTING psybncchk psybnc.conf.example scripts/example/DEFAULT.SCRIPT
-%config(noreplace) %verify(not size mtime md5) %attr(644,root,psybnc) /etc/certs/psybnc.cert.pem
-%config(noreplace) %verify(not size mtime md5) %attr(640,root,psybnc) /etc/certs/psybnc.key.pem
+%config(noreplace) %verify(not md5 mtime size) %attr(644,root,psybnc) /etc/certs/psybnc.cert.pem
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,psybnc) /etc/certs/psybnc.key.pem
 
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/%{name}
