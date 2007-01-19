@@ -16,7 +16,7 @@ Patch1:		psybnc-menuconf.patch
 Patch2:		psybnc-lang-path.patch
 Patch3:		psybnc-menuconf-runtime.patch
 Patch4:		psybnc-helppath.patch
-URL:		http://www.psychoid.lam3rz.de/psybnc.html
+URL:		http://www.psybnc.at/
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
