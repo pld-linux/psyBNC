@@ -1,19 +1,21 @@
+%define		_mainver	2.3.2
+%define		_subver		.7
+%define		_distver	%(echo %{_subver} |tr . -)
 Summary:	Advanced IRC bouncer
 Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
 Name:		psyBNC
-Version:	2.3.2.4
-Release:	1.23
+Version:	%{_mainver}%{_subver}
+Release:	1
 License:	GPL
 Group:		Networking/Utilities
 #Source0:	http://www.psychoid.lam3rz.de/%{name}%{version}.tar.gz
-Source0:	http://www.psybnc.info/download/%{name}2.3.2-4.tar.gz
-# Source0-md5:	f752aec57da0d08ee183b22f79b6b34f
+Source0:	http://www.psybnc.at/download/beta/%{name}-%{_mainver}%{_distver}.tar.gz
+# Source0-md5:	c475f14b1b3a9280a123142e6e344dd8
 Patch0:		psybnc-sslkey.patch
-Patch1:		psybnc-gcc34.patch
-Patch2:		psybnc-menuconf.patch
-Patch3:		psybnc-lang-path.patch
-Patch4:		psybnc-menuconf-runtime.patch
-Patch5:		psybnc-helppath.patch
+Patch1:		psybnc-menuconf.patch
+Patch2:		psybnc-lang-path.patch
+Patch3:		psybnc-menuconf-runtime.patch
+Patch4:		psybnc-helppath.patch
 URL:		http://www.psychoid.lam3rz.de/psybnc.html
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-tools
@@ -41,11 +43,10 @@ system wbudowanej pomocy.
 %prep
 %setup -q -n psybnc
 %patch0 -p1
-%patch1 -p1
-%patch2 -p0
-%patch3 -p1
+%patch1 -p0
+%patch2 -p1
+#%patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 # TODO:
