@@ -47,17 +47,18 @@ system wbudowanej pomocy.
 %patch2 -p1
 #%patch3 -p1
 %patch4 -p1
+echo "#define OIDENTD" >> config.h
 
 %build
 # TODO:
 # - BIGENDIAN detection is just opposite - is usage the same?
 # - IPV6 detection relies on IPv6 socket support on builder
 
-yes '' | %{__make} \
+%{__make} menuconfig \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}"
 
-%{__make} menuconfig \
+yes '' | %{__make} \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}"
 
