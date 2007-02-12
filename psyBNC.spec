@@ -1,6 +1,6 @@
 %define		ver 2.3.2-4
 Summary:	Advanced IRC bouncer
-Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
+Summary(pl.UTF-8):   Zaawansowane narzÄ™dzie do tunelowania IRC
 Name:		psyBNC
 Version:	2.3.2_4
 Release:	0.1
@@ -18,8 +18,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Advanced IRC proxy.
 
-%description -l pl
-Tunel IRC o wielu mo¿liwo¶ciach.
+%description -l pl.UTF-8
+Tunel IRC o wielu moÅ¼liwoÅ›ciach.
 
 %prep
 %setup -q -n psybnc
