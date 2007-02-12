@@ -2,7 +2,7 @@
 %define		_subver		.7
 %define		_distver	%(echo %{_subver} |tr . -)
 Summary:	Advanced IRC bouncer
-Summary(pl):	Zaawansowane narzêdzie do tunelowania IRC
+Summary(pl.UTF-8):   Zaawansowane narzÄ™dzie do tunelowania IRC
 Name:		psyBNC
 Version:	%{_mainver}%{_subver}
 Release:	1
@@ -32,12 +32,12 @@ bouncers to an internal network including a shared partyline, vhost-
 and relay support to connected bouncers and an extensive online help
 system. Many other helpful functions are included.
 
-%description -l pl
-psyBNC to ³atwe do u¿ycie, wielou¿ytkownikowe, sta³e ircowe proxy z
-wieloma bajerami. Po¶ród nich: symetryczne szyfrowanie rozmów i
-po³±czeñ (Blowfish i IDEA), mo¿liwo¶æ ³±czenia wielu proxy w
-wewnêtrzn± sieæ, razem z wspó³dzielonym kana³em rozmów, wsparcie
-vhostów i retransmisji do po³±czonych proxy, a tak¿e rozbudowany
+%description -l pl.UTF-8
+psyBNC to Å‚atwe do uÅ¼ycie, wielouÅ¼ytkownikowe, staÅ‚e ircowe proxy z
+wieloma bajerami. PoÅ›rÃ³d nich: symetryczne szyfrowanie rozmÃ³w i
+poÅ‚Ä…czeÅ„ (Blowfish i IDEA), moÅ¼liwoÅ›Ä‡ Å‚Ä…czenia wielu proxy w
+wewnÄ™trznÄ… sieÄ‡, razem z wspÃ³Å‚dzielonym kanaÅ‚em rozmÃ³w, wsparcie
+vhostÃ³w i retransmisji do poÅ‚Ä…czonych proxy, a takÅ¼e rozbudowany
 system wbudowanej pomocy.
 
 %prep
