@@ -2,7 +2,7 @@
 %define		_subver		.7
 %define		_distver	%(echo %{_subver} |tr . -)
 Summary:	Advanced IRC bouncer
-Summary(pl.UTF-8):   Zaawansowane narzędzie do tunelowania IRC
+Summary(pl.UTF-8):	Zaawansowane narzędzie do tunelowania IRC
 Name:		psyBNC
 Version:	%{_mainver}%{_subver}
 Release:	1
