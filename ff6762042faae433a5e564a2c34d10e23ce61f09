@@ -1,0 +1,2 @@
+ - now added patch no_ssl
+ - someone have to check it on independent builder. At mine it crashes with Sig11
