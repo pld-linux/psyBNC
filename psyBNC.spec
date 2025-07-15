@@ -45,7 +45,7 @@ system wbudowanej pomocy.
 %patch -P0 -p1
 %patch -P1 -p0
 %patch -P2 -p1
-#%patch3 -p1
+#%%patch3 -p1
 %patch -P4 -p1
 echo "#define OIDENTD" >> config.h
 
